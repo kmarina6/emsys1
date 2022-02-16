@@ -16,6 +16,7 @@ public class User implements Serializable {
         this.pass = pass;
     }
 
+
     //アクセッサ
     public String getId() {
         return id;
