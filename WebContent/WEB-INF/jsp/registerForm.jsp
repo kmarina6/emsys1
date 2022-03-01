@@ -8,13 +8,27 @@
 </head>
 
 <body>
-<form action="/Web/RegisterUser" method="post">
-ログインID：<input type="text" name="id">
-パスワード：<input type="text" name="pass"><br>
-名前：<input type="text" name="name"><br>
+<form action="/emsys/RegisterUser" method="post">
+
+<p><font size="5">【登録】</font></p>
+<p>◆入力フォームに入力してください</p>
+
+<table>
+<tr><td align="right">社員番号：</td><td><input type="text" name="emp_no" maxlength="8"></td></tr>
+<tr><td align="right">氏名：</td><td><input type="text" name="emp_name" ></td></tr>
+<tr><td align="right">よみかな：</td><td><input type="text" name="emp_kana"></td></tr>
+<tr><td align="right">入社日：</td><td><input type="text" name="hire_y" maxlength="4" style="width:30px;"> /
+<input type="text" name="hire_m" maxlength="2" style="width:15px;"> /
+<input type="text" name="hire_d" maxlength="2" style="width:15px;"></td></tr>
+<tr><td align="right">所属部署：</td><td><input type="text" name="department_data"></td></tr>
+<tr><td align="right">Mail：</td><td><input type="text" name="mail_add"></td></tr>
+<tr><td align="right">登録者：</td><td><input type="text" name="registered_person"></td></tr>
+</table>
+
 <br>
 <input type="submit" value="確認">
 </form>
 
+<a href="/emsys/top-jsp/top.jsp">TOP</a>
 </body>
 </html>
