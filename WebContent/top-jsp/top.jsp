@@ -11,9 +11,11 @@
 
 <div style="text-align:center;">
 
+<a><font size="10">【社員管理システム】</font></a><br>
+
 <input type="button" onclick="location.href='http://localhost:8080/emsys/RegisterUser'"value="登録">
 <br>
-<input type="button" onclick="location.href='http://localhost:8080/emsys/InquiryServlet'"value="参照">
+<input type="button" onclick="location.href='http://localhost:8080/emsys/InquiryServlet'"value="照会">
 <br>
 <input type="button" onclick="location.href='http://localhost:8080/emsys/Search?action=update'"value="編集">
 <br>

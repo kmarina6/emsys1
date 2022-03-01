@@ -98,66 +98,6 @@ public class InquiryServlet extends HttpServlet {
 
 				rs.close();
 			}
-			//「編集」をリクエストされたときの処理
-			else if(action.equals("update")){
-				String sql = "SELECT * FROM employee_data WHERE" + request.getParameter("emp_no");
-				ResultSet rs = stmt.executeQuery(sql);
-
-				// bean を生成
-				UserBean bean = new UserBean();
-
-				// SQL リザルトからデータを取得し、bean に保存していく
-				bean.setEmpNo(rs.getInt("emp_no"));
-				bean.setEmpName(rs.getString("emp_name"));
-				bean.setEmpKana(rs.getString("emp_kana"));
-				bean.setHireYmd(rs.getDate("hire_ymd"));
-				bean.setRetirementYmd(rs.getDate("retirement_ymd"));
-				bean.setDepartmentData(rs.getString("department_data"));
-				bean.setMailAdd(rs.getString("mail_add"));
-				bean.setUpdateDate(rs.getDate("update_date"));
-				bean.setUpdatePerson(rs.getString("update_person"));
-				bean.setRegisteredDate(rs.getDate("registered_date"));
-				bean.setRegisteredPerson(rs.getString("registered_person"));
-
-				beanList.add(bean);
-
-				//System.out.print("kiteruyo  ");
-
-				//登録後のフォワード先を設定
-				forwardPath = "/WEB-INF/update-jsp/update.jsp";
-
-				rs.close();
-			}
-			//「削除」をリクエストされたときの処理
-			else if(action.equals("update")){
-				String sql = "SELECT * FROM employee_data WHERE" + request.getParameter("emp_no");
-				ResultSet rs = stmt.executeQuery(sql);
-
-				// bean を生成
-				UserBean bean = new UserBean();
-
-				// SQL リザルトからデータを取得し、bean に保存していく
-				bean.setEmpNo(rs.getInt("emp_no"));
-				bean.setEmpName(rs.getString("emp_name"));
-				bean.setEmpKana(rs.getString("emp_kana"));
-				bean.setHireYmd(rs.getDate("hire_ymd"));
-				bean.setRetirementYmd(rs.getDate("retirement_ymd"));
-				bean.setDepartmentData(rs.getString("department_data"));
-				bean.setMailAdd(rs.getString("mail_add"));
-				bean.setUpdateDate(rs.getDate("update_date"));
-				bean.setUpdatePerson(rs.getString("update_person"));
-				bean.setRegisteredDate(rs.getDate("registered_date"));
-				bean.setRegisteredPerson(rs.getString("registered_person"));
-
-				beanList.add(bean);
-
-				//System.out.print("kiteruyo  ");
-
-				//登録後のフォワード先を設定
-				forwardPath = "/WEB-INF/delete-jsp/delete.jsp";
-
-				rs.close();
-			}
 			stmt.close();
 		} catch (ClassNotFoundException e) {
 			// 例外処理
