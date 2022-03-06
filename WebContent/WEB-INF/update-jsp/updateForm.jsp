@@ -5,7 +5,7 @@
 <%
 SearchUser searchUser = (SearchUser) session.getAttribute("searchUser");
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,58 +22,62 @@ SearchUser searchUser = (SearchUser) session.getAttribute("searchUser");
 
 		<table>
 			<tr>
-				<td align="right">社員番号：</td>
+				<td>社員番号：</td>
 				<td><input type="text" name="emp_no_after" maxlength="8"
-					value=<%=searchUser.getEmpNo()%>> <input type="hidden"
-					name="emp_no" value=<%=searchUser.getEmpNo()%>></td>
+					value=<%=searchUser.getEmpNo()%> required> <input
+					type="hidden" name="emp_no" value=<%=searchUser.getEmpNo()%>></td>
 			</tr>
 			<tr>
-				<td align="right">氏名：</td>
+				<td>氏名：</td>
 				<td><input type="text" name="emp_name"
-					value=<%=searchUser.getEmpName()%>></td>
+					value=<%=searchUser.getEmpName()%> required></td>
 			</tr>
 			<tr>
-				<td align="right">よみかな：</td>
+				<td>よみかな：</td>
 				<td><input type="text" name="emp_kana"
-					value=<%=searchUser.getEmpKana()%>></td>
+					value=<%=searchUser.getEmpKana()%> required></td>
 			</tr>
 			<tr>
-				<td align="right">入社日：</td>
-				<td><input type="text" name="hire_y"
-					value=<%=searchUser.getHireY()%> maxlength="4"
-					style="width: 30px;"> / <input type="text" name="hire_m"
-					value=<%=searchUser.getHireM()%> maxlength="2"
-					style="width: 15px;"> / <input type="text" name="hire_d"
-					value=<%=searchUser.getHireD()%> maxlength="2"
-					style="width: 15px;"></td>
-			</tr>
-
-
-			<tr>
-				<td align="right">退職日：</td>
-				<td><input type="text" name="retirement_y"
-					value=<%=searchUser.getRetirementY()%> maxlength="4"
-					style="width: 30px;"> / <input type="text" name="retirement_m"
-					value=<%=searchUser.getRetirementM()%> maxlength="2"
-					style="width: 15px;"> / <input type="text" name="retirement_d"
-					value=<%=searchUser.getRetirementD()%> maxlength="2"
-					style="width: 15px;"></td>
+				<td>入社日：</td>
+				<td><input type="date" name="hire_ymd"
+					value=<%=searchUser.getHireYmd()%>></td>
 			</tr>
 
 			<tr>
-				<td align="right">所属部署：</td>
-				<td><input type="text" name="department_data"
-					value=<%=searchUser.getDepartmentData()%>></td>
+				<td>退職日：</td>
+				<td><input type="date" name="retirement_ymd"
+					value=<%=searchUser.getRetirementYmd()%>></td>
+			</tr>
+
+			<tr>
+				<td>所属部署：</td>
+				<td><select name="department_data">
+						<%
+						if (searchUser.getDepartmentData() == "") {
+						%>
+						<option value="">所属部署を選択してください</option>
+						<%
+						} else {
+						%>
+						<option value=<%=searchUser.getDepartmentData()%>><%=searchUser.getDepartmentData()%></option>
+						<%
+						}
+						%>
+						<option value="システム開発部">システム開発部</option>
+						<option value="基盤技術部">基盤技術部</option>
+						<option value="ITM部">ITM部</option>
+				</select></td>
+
 			</tr>
 			<tr>
-				<td align="right">Mail：</td>
+				<td>Mail：</td>
 				<td><input type="text" name="mail_add"
-					value=<%=searchUser.getMailAdd()%>></td>
+					value=<%=searchUser.getMailAdd()%> required></td>
 			</tr>
 			<tr>
-				<td align="right">編集者：</td>
+				<td>編集者：</td>
 				<td><input type="text" name="update_person"
-					value=<%= searchUser.getUpdatePerson()%>></td>
+					value=<%=searchUser.getUpdatePerson()%> required></td>
 			</tr>
 		</table>
 

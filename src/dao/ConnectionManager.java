@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConnectionManager {
 
     // URL・ユーザ名・パスワードの設定
-    private final static String URL = "jdbc:mysql://localhost:3306/emsys?useSSL=false";
+    private final static String URL = "jdbc:mysql://localhost:3306/emsys?allowPublicKeyRetrieval=true&useSSL=false";
     private final static String USER = "root";
     private final static String PASSWORD = "Km_elie3173ms1955";
     // コネクションオブジェクト

@@ -52,24 +52,19 @@ public class MemberDao {
         String emp_kana = user.getEmpKana();
 
         // 入社日date型変換 -------------------------------------------------------------------
-        String st_hire_y = user.getHireY();
-        String st_hire_m = user.getHireM();
-        String st_hire_d = user.getHireD();
-        String st_hire_ymd = st_hire_y + "-" + st_hire_m + "-" + st_hire_d;
-        Date hire_ymd  = java.sql.Date.valueOf(st_hire_ymd);
-
+        String st_hire_ymd = user.getHireYmd();
+        Date hire_ymd = null;
+        if(st_hire_ymd.equals("null")) {
+        	hire_ymd  = null;
+        }else {
+        	hire_ymd  = java.sql.Date.valueOf(st_hire_ymd);
+        }
 
         // 所属部署 ---------------------------------------------------------------------------
         String department_data = user.getDepartmentData();
 
         // メールアドレス --------------------------------------------------------------------
         String mail_add = user.getMailAdd();
-
-        // 更新日 ----------------------------------------------------------------------------
-        //Date update_date = nowdate;
-
-        // 更新者 ----------------------------------------------------------------------------
-        //String update_person = user.getUpdatePerson();
 
         // 登録日 ----------------------------------------------------------------------------
         Date registered_date = nowdate;

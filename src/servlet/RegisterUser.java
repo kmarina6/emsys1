@@ -89,9 +89,12 @@ public class RegisterUser extends HttpServlet {
 		String emp_no = request.getParameter("emp_no");
 		String emp_name = request.getParameter("emp_name");
 		String emp_kana = request.getParameter("emp_kana");
-		String hire_y = request.getParameter("hire_y");
-		String hire_m = request.getParameter("hire_m");
-		String hire_d = request.getParameter("hire_d");
+		String hire_ymd;
+		if(request.getParameter("hire_ymd") == "") {
+			hire_ymd = "null";
+		}else {
+			hire_ymd = request.getParameter("hire_ymd");
+		}
 		//String retirement_ymd = request.getParameter("retirement_ymd");
 		String department_data = request.getParameter("department_data");
 		String mail_add = request.getParameter("mail_add");
@@ -101,7 +104,7 @@ public class RegisterUser extends HttpServlet {
 		String registered_person = request.getParameter("registered_person");
 
 		//登録するユーザの情報を設定
-		User registerUser = new User(emp_no, emp_name, emp_kana, hire_y, hire_m, hire_d, department_data, mail_add, update_date, update_person, registered_date, registered_person);
+		User registerUser = new User(emp_no, emp_name, emp_kana, hire_ymd, department_data, mail_add, update_date, update_person, registered_date, registered_person);
 
 		//セッションスコープに登録ユーザを保存
 		HttpSession session = request.getSession();

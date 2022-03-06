@@ -6,7 +6,7 @@
 SearchUser searchUser = (SearchUser) session.getAttribute("searchUser");
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,8 +21,9 @@ SearchUser searchUser = (SearchUser) session.getAttribute("searchUser");
 <tr><td align="right">社員番号：</td><td><%= searchUser.getEmpNo()%></td></tr>
 <tr><td align="right">氏名：</td><td><%= searchUser.getEmpName()%></td></tr>
 <tr><td align="right">よみかな：</td><td><%= searchUser.getEmpKana()%></td></tr>
-<tr><td align="right">入社日：</td><td><%= searchUser.getHireY()%>/<%= searchUser.getHireM()%>/<%= searchUser.getHireD()%></td></tr>
-<tr><td align="right">所属部署：</td><td><%= searchUser.getDepartmentData()%></td></tr>
+<tr><td align="right">入社日：</td><td><%= searchUser.getHireYmd().replaceAll("-","/").replaceAll("null","")%></td></tr>
+<tr><td align="right">退職日：</td><td><%= searchUser.getRetirementYmd().replaceAll("-","/").replaceAll("null","")%></td></tr>
+<tr><td align="right">所属部署：</td><td><%= searchUser.getDepartmentData().replaceAll("null","")%></td></tr>
 <tr><td align="right">Mail：</td><td><%= searchUser.getMailAdd()%></td></tr>
 <tr><td align="right">更新日：</td><td><%= searchUser.getUpdateDate()%></td></tr>
 <tr><td align="right">更新者：</td><td><%= searchUser.getUpdatePerson()%></td></tr>
@@ -31,7 +32,9 @@ SearchUser searchUser = (SearchUser) session.getAttribute("searchUser");
 </table>
 
 <br>
+<input type="button" onclick="location.href='http://localhost:8080/emsys/DeleteUser?action=done'"
+		value="削除">
 <a href="/emsys/Search?action=delete">戻る</a>
-<a href="/emsys/DeleteUser?action=done">削除</a>
+
 </body>
 </html>

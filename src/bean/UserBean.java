@@ -1,32 +1,31 @@
 package bean;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class UserBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 
-	private int emp_no;
+	private String emp_no;
 	private String emp_name;
 	private String emp_kana;
-	private Date hire_ymd;
-	private Date retirement_ymd;
+	private String hire_ymd;
+	private String retirement_ymd;
 	private String department_data;
 	private String mail_add;
-	private Date update_date;
+	private String update_date;
 	private String update_person;
-	private Date registered_date;
+	private String registered_date;
 	private String registered_person;
-	private boolean delete_flag;
+	private String delete_flag;
 
 	public UserBean(){}
 
-	public int getEmpNo() {
+	public String getEmpNo() {
 		return emp_no;
 	}
 
-	public void setEmpNo(int emp_no) {
+	public void setEmpNo(String emp_no) {
 		this.emp_no = emp_no;
 	}
 
@@ -46,19 +45,19 @@ public class UserBean implements Serializable {
 		this.emp_kana = emp_kana;
 	}
 
-	public Date getHireYmd() {
+	public String getHireYmd() {
 		return hire_ymd;
 	}
 
-	public void setHireYmd(Date hire_ymd) {
+	public void setHireYmd(String hire_ymd) {
 		this.hire_ymd = hire_ymd;
 	}
 
-	public Date getRetirementYmd() {
+	public String getRetirementYmd() {
 		return retirement_ymd;
 	}
 
-	public void setRetirementYmd(Date retirement_ymd) {
+	public void setRetirementYmd(String retirement_ymd) {
 		this.retirement_ymd = retirement_ymd;
 	}
 
@@ -78,11 +77,11 @@ public class UserBean implements Serializable {
 		this.mail_add = mail_add;
 	}
 
-	public Date getUpdateDate() {
+	public String getUpdateDate() {
 		return update_date;
 	}
 
-	public void setUpdateDate(Date update_date) {
+	public void setUpdateDate(String update_date) {
 		this.update_date = update_date;
 	}
 	public String getUpdatePerson() {
@@ -93,11 +92,11 @@ public class UserBean implements Serializable {
 		this.update_person = update_person;
 	}
 
-	public Date getRegisteredDate() {
+	public String getRegisteredDate() {
 		return registered_date;
 	}
 
-	public void setRegisteredDate(Date registered_date) {
+	public void setRegisteredDate(String registered_date) {
 		this.registered_date = registered_date;
 	}
 
@@ -109,11 +108,11 @@ public class UserBean implements Serializable {
 		this.registered_person = registered_person;
 	}
 
-	public Boolean getDeleteFlag() {
+	public String getDeleteFlag() {
 		return delete_flag;
 	}
 
-	public void setDeleteFlag(Boolean delete_flag) {
+	public void setDeleteFlag(String delete_flag) {
 		this.delete_flag = delete_flag;
 	}
 }

@@ -54,7 +54,8 @@ public class Search extends HttpServlet {
 		}
 		//登録確認画面から「登録実行」をリクエストされたときの処理
 		else if(action.equals("delete")){
-			forwardPath = "/WEB-INF/delete-jsp/deleteTop.jsp";		}
+			forwardPath = "/WEB-INF/delete-jsp/deleteTop.jsp";
+		}
 
 		// 設定されたフォワード先を設定
 		RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
@@ -75,18 +76,7 @@ public class Search extends HttpServlet {
 		String emp_name = request.getParameter("emp_name");
 		String emp_kana = request.getParameter("emp_kana");
 		String hire_ymd = request.getParameter("hire_ymd");
-
-		String hire_y = request.getParameter("hire_y");
-		String hire_m = request.getParameter("hire_m");
-		String hire_d = request.getParameter("hire_d");
-
 		String retirement_ymd = request.getParameter("retirement_ymd");
-
-		// ここまだ使ってない
-		String retirement_y = request.getParameter("retirement_y");
-		String retirement_m = request.getParameter("retirement_m");
-		String retirement_d = request.getParameter("retirement_d");
-
 		String department_data = request.getParameter("department_data");
 		String mail_add = request.getParameter("mail_add");
 		String update_date = request.getParameter("update_date");
@@ -97,7 +87,7 @@ public class Search extends HttpServlet {
 
 		//---------------------------------------------------------------------------------------------
 		Connection conn = null;
-		String url = "jdbc:mysql://localhost:3306/emsys?useSSL=false";
+		String url = "jdbc:mysql://localhost:3306/emsys?allowPublicKeyRetrieval=true&useSSL=false";
 		String user = "root";
 		String password = "Km_elie3173ms1955";
 
@@ -124,13 +114,13 @@ public class Search extends HttpServlet {
 				emp_kana = rs.getString("emp_kana");
 				if(rs.getDate("hire_ymd") != null) {
 					hire_ymd =  new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("hire_ymd"));
-
-					hire_y =  new SimpleDateFormat("yyyy").format(rs.getDate("hire_ymd"));
-					hire_m =  new SimpleDateFormat("MM").format(rs.getDate("hire_ymd"));
-					hire_d =  new SimpleDateFormat("dd").format(rs.getDate("hire_ymd"));
+				}else {
+					hire_ymd = "null";
 				}
 				if(rs.getDate("retirement_ymd") != null) {
 					retirement_ymd = new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("retirement_ymd"));
+				}else {
+					retirement_ymd ="null";
 				}
 				department_data = rs.getString("department_data");
 				mail_add = rs.getString("mail_add");
@@ -168,7 +158,7 @@ public class Search extends HttpServlet {
 
 
 		//登録するユーザの情報を設定
-		SearchUser searchUser = new SearchUser(emp_no, emp_no_after, emp_name, emp_kana, hire_ymd, hire_y, hire_m, hire_d, retirement_ymd, retirement_y, retirement_m, retirement_d, department_data, mail_add, update_date, update_person, registered_date, registered_person);
+		SearchUser searchUser = new SearchUser(emp_no, emp_no_after, emp_name, emp_kana, hire_ymd, retirement_ymd, department_data, mail_add, update_date, update_person, registered_date, registered_person);
 
 		//セッションスコープに登録ユーザを保存
 		HttpSession session = request.getSession();

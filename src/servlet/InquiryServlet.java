@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -38,7 +39,7 @@ public class InquiryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = null;
-		String url = "jdbc:mysql://localhost:3306/emsys?useSSL=false";
+		String url = "jdbc:mysql://localhost:3306/emsys?allowPublicKeyRetrieval=true&useSSL=false";
 		String user = "root";
 		String password = "Km_elie3173ms1955";
 
@@ -52,7 +53,6 @@ public class InquiryServlet extends HttpServlet {
 		//サーブレットクラスの動作を決定する「action」の値を
 		//リクエストパラメータから取得
 		String action = request.getParameter("action");
-		String action_update = request.getParameter("action_update");
 
 		try {
 
@@ -73,24 +73,35 @@ public class InquiryServlet extends HttpServlet {
 					UserBean bean = new UserBean();
 
 					// SQL リザルトからデータを取得し、bean に保存していく
-					bean.setEmpNo(rs.getInt("emp_no"));
+					bean.setEmpNo(rs.getString("emp_no"));
 					bean.setEmpName(rs.getString("emp_name"));
 					bean.setEmpKana(rs.getString("emp_kana"));
-					bean.setHireYmd(rs.getDate("hire_ymd"));
-					bean.setRetirementYmd(rs.getDate("retirement_ymd"));
+
+					if(rs.getDate("hire_ymd") != null) {
+						bean.setHireYmd(new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("hire_ymd")));
+					}else {
+						bean.setHireYmd("null");
+					}
+					if(rs.getDate("retirement_ymd") != null) {
+						bean.setRetirementYmd(new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("retirement_ymd")));
+					}else {
+						bean.setRetirementYmd("null");
+					}
+
 					bean.setDepartmentData(rs.getString("department_data"));
 					bean.setMailAdd(rs.getString("mail_add"));
-					bean.setUpdateDate(rs.getDate("update_date"));
+					bean.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("update_date")));
 					bean.setUpdatePerson(rs.getString("update_person"));
-					bean.setRegisteredDate(rs.getDate("registered_date"));
+					bean.setRegisteredDate(new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("registered_date")));
 					bean.setRegisteredPerson(rs.getString("registered_person"));
 
 					// データを保存した bean を beanList に追加
 					if(rs.getBoolean("delete_flag") == false){
-						beanList.add(bean);
+						bean.setDeleteFlag("");
 					}else {
-
+						bean.setDeleteFlag("×");
 					}
+					beanList.add(bean);
 					//System.out.print("kiteruyo  ");
 				}
 				//登録後のフォワード先を設定

@@ -10,17 +10,7 @@ public class UserToUpdate implements Serializable {
 	private String emp_name;
 	private String emp_kana;
 	private String hire_ymd;
-
-	private String hire_y;
-	private String hire_m;
-	private String hire_d;
-
 	private String retirement_ymd;
-
-	private String retirement_y;
-	private String retirement_m;
-	private String retirement_d;
-
 	private String department_data;
 	private String mail_add;
 	private String update_date;
@@ -28,25 +18,14 @@ public class UserToUpdate implements Serializable {
 	private String registered_date;
 	private String registered_person;
 
-	public UserToUpdate(String emp_no, String emp_no_after, String emp_name, String emp_kana, String hire_ymd, String hire_y, String hire_m, String hire_d, String retirement_ymd, String retirement_y, String retirement_m, String retirement_d, String department_data, String mail_add, String update_date, String update_person, String registered_date, String registered_person){
+	public UserToUpdate(String emp_no, String emp_no_after, String emp_name, String emp_kana, String hire_ymd, String retirement_ymd, String department_data, String mail_add, String update_date, String update_person, String registered_date, String registered_person){
 
 		this.emp_no = emp_no;
 		this.emp_no_after = emp_no_after;
 		this.emp_name = emp_name;
-		//System.out.print("delete_user_name" + emp_name + "  ");
 		this.emp_kana = emp_kana;
 		this.hire_ymd = hire_ymd;
-
-		this.hire_y = hire_y;
-		this.hire_m = hire_m;
-		this.hire_d = hire_d;
-
 		this.retirement_ymd = retirement_ymd;
-
-		this.retirement_y = retirement_y;
-		this.retirement_m = retirement_m;
-		this.retirement_d = retirement_d;
-
 		this.department_data = department_data;
 		this.mail_add = mail_add;
 		this.update_date = update_date;
@@ -77,33 +56,11 @@ public class UserToUpdate implements Serializable {
 		return hire_ymd;
 	}
 
-	public String getHireY() {
-		System.out.print("UserToUpdate_hire_y" + hire_y + "  ");
-		return hire_y;
-	}
-	public String getHireM() {
-		return hire_m;
-	}
-	public String getHireD() {
-		return hire_d;
-	}
-
 	public String getRetirementYmd() {
 		return retirement_ymd;
 	}
 
-	public String getRetirementY() {
-		return retirement_y;
-	}
-	public String getRetirementM() {
-		return retirement_m;
-	}
-	public String getRetirementD() {
-		return retirement_d;
-	}
-
 	public String getDepartmentData() {
-		System.out.print("UserToUpdate_department_data" + department_data + "  ");
 		return department_data;
 	}
 	public String getMailAdd() {

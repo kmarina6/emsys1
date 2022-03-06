@@ -8,9 +8,7 @@ public class User implements Serializable {
 	private String emp_no;
 	private String emp_name;
 	private String emp_kana;
-	private String hire_y;
-	private String hire_m;
-	private String hire_d;
+	private String hire_ymd;
 	//private String retirement_ymd;
 	private String department_data;
 	private String mail_add;
@@ -19,13 +17,11 @@ public class User implements Serializable {
 	private String registered_date;
 	private String registered_person;
 
-	public User(String emp_no, String emp_name, String emp_kana, String hire_y, String hire_m, String hire_d, String department_data, String mail_add, String update_date, String update_person, String registered_date, String registered_person){
+	public User(String emp_no, String emp_name, String emp_kana, String hire_ymd, String department_data, String mail_add, String update_date, String update_person, String registered_date, String registered_person){
 		this.emp_no = emp_no;
 		this.emp_name = emp_name;
 		this.emp_kana = emp_kana;
-		this.hire_y = hire_y;
-		this.hire_m = hire_m;
-		this.hire_d = hire_d;
+		this.hire_ymd = hire_ymd;
 		//this.retirement_ymd = retirement_ymd;
 		this.department_data = department_data;
 		this.mail_add = mail_add;
@@ -49,14 +45,8 @@ public class User implements Serializable {
 	public String getEmpKana() {
 		return emp_kana;
 	}
-	public String getHireY() {
-		return hire_y;
-	}
-	public String getHireM() {
-		return hire_m;
-	}
-	public String getHireD() {
-		return hire_d;
+	public String getHireYmd() {
+		return hire_ymd;
 	}
 
 	public String getDepartmentData() {

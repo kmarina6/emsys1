@@ -20,9 +20,7 @@ public class UserToDelete implements Serializable {
 	public UserToDelete(String emp_no, String emp_name, String emp_kana, String hire_ymd, String retirement_ymd, String department_data, String mail_add, String update_date, String update_person, String registered_date, String registered_person){
 
 		this.emp_no = emp_no;
-		//System.out.print("delete_user_no" + emp_no + "  ");
 		this.emp_name = emp_name;
-		//System.out.print("delete_user_name" + emp_name + "  ");
 		this.emp_kana = emp_kana;
 		this.hire_ymd = hire_ymd;
 		this.retirement_ymd = retirement_ymd;
@@ -39,7 +37,6 @@ public class UserToDelete implements Serializable {
 	//アクセッサ
 
 	public String getEmpNo() {
-		//System.out.print("kiteruyo_deleteUser" + emp_no + "  ");
 		return emp_no;
 	}
 	public String getEmpName() {
