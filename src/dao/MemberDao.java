@@ -42,8 +42,7 @@ public class MemberDao {
         Date nowdate = new Date(miliseconds);
 
         // 社員番号 -------------------------------------------------------------------------
-        String emp_no_st = user.getEmpNo();
-        int emp_no = Integer.parseInt(emp_no_st);
+        String emp_no = user.getEmpNo();
 
         // 氏名 -------------------------------------------------------------------------------
         String emp_name = user.getEmpName();
@@ -81,7 +80,7 @@ public class MemberDao {
         Boolean delete_flag = false;
 
         try(PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setInt(1, emp_no);
+            pstmt.setString(1, emp_no);
         	pstmt.setString(2, emp_name);
             pstmt.setString(3, emp_kana);
             pstmt.setDate(4, hire_ymd);

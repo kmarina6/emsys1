@@ -13,6 +13,7 @@ public class RegisterUserLogic {
             memberDao.insertMember(user);
             registCheck = true;
         } catch (DAOException e) {
+
             // TODO 自動生成された catch ブロック
             e.printStackTrace();
         }

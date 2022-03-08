@@ -7,6 +7,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+function checkDoubleSubmit(){
+  var obj = document.getElementById("btnSubmit");
+  if(obj.disabled){
+    //ボタンがdisabledならsubmitしない
+    return false;
+  }else{
+    //ボタンがdisabledでなければ、ボタンをdisabledにした上でsubmitする
+    obj.disabled = true;
+    return true;
+  }
+}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>編集</title>
 </head>
@@ -30,7 +43,7 @@
 
 <br>
 <input type="button" onclick="location.href='http://localhost:8080/emsys/UpdateUser?action=done'"
-		value="登録">
+		value="登録" onclick="checkDoubleSubmit()">
 <a href="/emsys/Search?action=update">戻る</a>
 </body>
 </html>

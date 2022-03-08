@@ -43,11 +43,9 @@ public class UpdateMemberDao {
         Date nowdate = new Date(miliseconds);
 
         // 社員番号 -------------------------------------------------------------------------
-        String emp_no_st = UserToUpdate.getEmpNo();
-        int emp_no = Integer.parseInt(emp_no_st);
+        String emp_no = UserToUpdate.getEmpNo();
 
-        String emp_no_after_st = UserToUpdate.getEmpNoAfter();
-        int emp_no_after = Integer.parseInt(emp_no_after_st);
+        String emp_no_after = UserToUpdate.getEmpNoAfter();
 
         // 氏名 -------------------------------------------------------------------------------
         String emp_name = UserToUpdate.getEmpName();
@@ -93,7 +91,7 @@ public class UpdateMemberDao {
 
 
         try(PreparedStatement pstmt = con.prepareStatement(sql)) {
-        	pstmt.setInt(1, emp_no_after);
+        	pstmt.setString(1, emp_no_after);
         	pstmt.setString(2, emp_name);
             pstmt.setString(3, emp_kana);
             pstmt.setDate(4, hire_ymd);
@@ -102,7 +100,7 @@ public class UpdateMemberDao {
             pstmt.setString(7, mail_add);
             pstmt.setDate(8, update_date);
             pstmt.setString(9, update_person);
-            pstmt.setInt(10, emp_no);
+            pstmt.setString(10, emp_no);
 
             count += pstmt.executeUpdate();
         }catch(SQLIntegrityConstraintViolationException e) {

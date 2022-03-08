@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.DepartmentBean;
 import model.SearchUser;
+
 /**
  * Servlet implementation class RegisterUser
  */
@@ -36,7 +39,8 @@ public class Search extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		//      // TODO Auto-generated method stub
 		//      response.getWriter().append("Served at: ").append(request.getContextPath());
 
@@ -48,12 +52,12 @@ public class Search extends HttpServlet {
 		String action = request.getParameter("action");
 
 		//「登録の開始」をリクエストされたときの処理
-		if(action.equals("update")){
+		if (action.equals("update")) {
 			//フォワード先を設定
 			forwardPath = "/WEB-INF/update-jsp/updateTop.jsp";
 		}
 		//登録確認画面から「登録実行」をリクエストされたときの処理
-		else if(action.equals("delete")){
+		else if (action.equals("delete")) {
 			forwardPath = "/WEB-INF/delete-jsp/deleteTop.jsp";
 		}
 
@@ -65,7 +69,8 @@ public class Search extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		//      // TODO Auto-generated method stub
 		//      doGet(request, response);
 
@@ -103,7 +108,7 @@ public class Search extends HttpServlet {
 			// データベースへ SQL 文を発行
 			Statement stmt = conn.createStatement();
 
-			//「登録の開始」をリクエストされたときの処理
+			// 編集前内容の表示の処理
 			String sql = "SELECT * FROM employee_data WHERE emp_no='" + emp_no + "'";
 			System.out.print("kiteruyo_sql" + sql + "   ");
 			ResultSet rs = stmt.executeQuery(sql);
@@ -112,15 +117,15 @@ public class Search extends HttpServlet {
 				// SQL リザルトからデータを取得し、bean に保存していく
 				emp_name = rs.getString("emp_name");
 				emp_kana = rs.getString("emp_kana");
-				if(rs.getDate("hire_ymd") != null) {
-					hire_ymd =  new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("hire_ymd"));
-				}else {
+				if (rs.getDate("hire_ymd") != null) {
+					hire_ymd = new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("hire_ymd"));
+				} else {
 					hire_ymd = "null";
 				}
-				if(rs.getDate("retirement_ymd") != null) {
+				if (rs.getDate("retirement_ymd") != null) {
 					retirement_ymd = new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("retirement_ymd"));
-				}else {
-					retirement_ymd ="null";
+				} else {
+					retirement_ymd = "null";
 				}
 				department_data = rs.getString("department_data");
 				mail_add = rs.getString("mail_add");
@@ -130,7 +135,6 @@ public class Search extends HttpServlet {
 				registered_person = rs.getString("registered_person");
 				delete_flag = rs.getBoolean("delete_flag");
 			}
-			//System.out.print("kiteruyo  ");
 
 			rs.close();
 			stmt.close();
@@ -153,35 +157,86 @@ public class Search extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+
+		// beanList を生成
+		ArrayList<DepartmentBean> depBeanList = new ArrayList<DepartmentBean>();
+
+		try {
+
+			// JDBC ドライバを読み込み
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, user, password);
+
+			// データベースへ SQL 文を発行
+			Statement stmt = conn.createStatement();
+
+			//「登録の開始」をリクエストされたときの処理
+			//---------------------------------------------------------
+			String sql = "SELECT * FROM m_department";
+			//---------------------------------------------------------
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				// bean を生成
+				DepartmentBean depBean = new DepartmentBean();
+
+				// SQL リザルトからデータを取得し、bean に保存していく
+				depBean.setId(rs.getString("id"));
+				depBean.setJobName(rs.getString("job_name"));
+				// データを保存した bean を beanList に追加
+				depBeanList.add(depBean);
+			}
+			rs.close();
+			stmt.close();
+		} catch (ClassNotFoundException e) {
+			// 例外処理
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// 例外処理
+			e.printStackTrace();
+		} catch (Exception e) {
+			// 例外処理
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// 例外処理
+				e.printStackTrace();
+			}
+		}
+		// beanList をリクエストにセット
+		request.setAttribute("depBeanList", depBeanList);
+
+
 		ServletContext context = this.getServletContext();
 		//------------------------------------------------------------------------------------
 
-
 		//登録するユーザの情報を設定
-		SearchUser searchUser = new SearchUser(emp_no, emp_no_after, emp_name, emp_kana, hire_ymd, retirement_ymd, department_data, mail_add, update_date, update_person, registered_date, registered_person);
+		SearchUser searchUser = new SearchUser(emp_no, emp_no_after, emp_name, emp_kana, hire_ymd, retirement_ymd,
+				department_data, mail_add, update_date, update_person, registered_date, registered_person);
 
 		//セッションスコープに登録ユーザを保存
 		HttpSession session = request.getSession();
 		session.setAttribute("searchUser", searchUser);
-
 
 		//サーブレットクラスの動作を決定する「action」の値を
 		//リクエストパラメータから取得
 		String action = request.getParameter("action");
 
 		//「登録の開始」をリクエストされたときの処理
-		System.out.print("kiteruyo!Delete_flag2 " + delete_flag + "  ");
-		if(action.equals("update")){
-			if(delete_flag == false) {
+		if (action.equals("update")) {
+			if (delete_flag == false) {
 				forwardPath = "/WEB-INF/update-jsp/updateForm.jsp";
-			}else{
+			} else {
 				forwardPath = "/WEB-INF/update-jsp/updateNe.jsp";
 			}
 
-		}else if(action.equals("delete")){
-			if(delete_flag == false) {
+		} else if (action.equals("delete")) {
+			if (delete_flag == false) {
 				forwardPath = "/WEB-INF/delete-jsp/deleteConfirm.jsp";
-			}else{
+			} else {
 				forwardPath = "/WEB-INF/delete-jsp/deleteNe.jsp";
 			}
 		}

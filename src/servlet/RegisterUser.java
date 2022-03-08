@@ -1,8 +1,15 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.DepartmentBean;
 import model.RegisterUserLogic;
 import model.User;
 
@@ -46,6 +54,70 @@ public class RegisterUser extends HttpServlet {
 
 		//「登録の開始」をリクエストされたときの処理
 		if(action == null){
+
+			//------------------------------------------
+			Connection conn = null;
+			String url = "jdbc:mysql://localhost:3306/emsys?allowPublicKeyRetrieval=true&useSSL=false";
+			String user = "root";
+			String password = "Km_elie3173ms1955";
+
+			// beanList を生成
+			ArrayList<DepartmentBean> depBeanList = new ArrayList<DepartmentBean>();
+
+			try {
+
+				// JDBC ドライバを読み込み
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = DriverManager.getConnection(url, user, password);
+
+				// データベースへ SQL 文を発行
+				Statement stmt = conn.createStatement();
+
+				//「登録の開始」をリクエストされたときの処理
+				//---------------------------------------------------------
+				String sql = "SELECT * FROM m_department";
+				//---------------------------------------------------------
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					// bean を生成
+					DepartmentBean bean = new DepartmentBean();
+
+					// SQL リザルトからデータを取得し、bean に保存していく
+					bean.setId(rs.getString("id"));
+					bean.setJobName(rs.getString("job_name"));
+					// データを保存した bean を beanList に追加
+
+					depBeanList.add(bean);
+					//System.out.print("kiteruyo  ");
+				}
+				rs.close();
+				stmt.close();
+			} catch (ClassNotFoundException e) {
+				// 例外処理
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// 例外処理
+				e.printStackTrace();
+			} catch (Exception e) {
+				// 例外処理
+				e.printStackTrace();
+			} finally {
+				try {
+					if (conn != null) {
+						conn.close();
+					}
+				} catch (SQLException e) {
+					// 例外処理
+					e.printStackTrace();
+				}
+			}
+			//---------------------------------------------------------------------------------
+			// beanList をリクエストにセット
+			request.setAttribute("depBeanList", depBeanList);
+			//---------------------------------------------------------------------------------
+			ServletContext context = this.getServletContext();
+
+			//-------------------------------------------
 			//フォワード先を設定
 			forwardPath = "/WEB-INF/jsp/registerForm.jsp";
 		}
@@ -56,7 +128,7 @@ public class RegisterUser extends HttpServlet {
 			User registerUser = (User)session.getAttribute("registerUser");
 
 			//登録処理の呼び出し
-			RegisterUserLogic logic = new RegisterUserLogic();
+			RegisterUserLogic logic = new RegisterUserLogic();// --------------------------!!
 			judge_flag = logic.exute(registerUser);
 
 			//不要となったセッションスコープ内のインスタンスを削除
