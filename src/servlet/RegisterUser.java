@@ -50,7 +50,7 @@ public class RegisterUser extends HttpServlet {
 		//リクエストパラメータから取得
 		String action = request.getParameter("action");
 
-		boolean judge_flag = false;
+		String error_state = null;
 
 		//「登録の開始」をリクエストされたときの処理
 		if(action == null){
@@ -65,6 +65,7 @@ public class RegisterUser extends HttpServlet {
 			ArrayList<DepartmentBean> depBeanList = new ArrayList<DepartmentBean>();
 
 			try {
+				//---所属部署をマスタから読み込み---
 
 				// JDBC ドライバを読み込み
 				Class.forName("com.mysql.jdbc.Driver");
@@ -73,7 +74,7 @@ public class RegisterUser extends HttpServlet {
 				// データベースへ SQL 文を発行
 				Statement stmt = conn.createStatement();
 
-				//「登録の開始」をリクエストされたときの処理
+
 				//---------------------------------------------------------
 				String sql = "SELECT * FROM m_department";
 				//---------------------------------------------------------
@@ -111,36 +112,38 @@ public class RegisterUser extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			//---------------------------------------------------------------------------------
 			// beanList をリクエストにセット
 			request.setAttribute("depBeanList", depBeanList);
-			//---------------------------------------------------------------------------------
+
 			ServletContext context = this.getServletContext();
 
 			//-------------------------------------------
 			//フォワード先を設定
-			forwardPath = "/WEB-INF/jsp/registerForm.jsp";
+			forwardPath = "/WEB-INF/register-jsp/registerForm.jsp";
 		}
-		//登録確認画面から「登録実行」をリクエストされたときの処理
 		else if(action.equals("done")){
+			//---登録確認画面から「登録実行」をリクエスト---
+
 			//セッションスコープに保存された登録ユーザを
 			HttpSession session = request.getSession();
 			User registerUser = (User)session.getAttribute("registerUser");
 
 			//登録処理の呼び出し
-			RegisterUserLogic logic = new RegisterUserLogic();// --------------------------!!
-			judge_flag = logic.exute(registerUser);
-
 			//不要となったセッションスコープ内のインスタンスを削除
 			session.removeAttribute("registerUser");
 
-			if(judge_flag) {
-				//登録後のフォワード先を設定
-				forwardPath = "/WEB-INF/jsp/registerDone.jsp";
-			}else {
-				forwardPath = "/WEB-INF/jsp/registerDoneNe.jsp";
-			}
+			RegisterUserLogic logicTest = new RegisterUserLogic();
+			error_state = logicTest.exute(registerUser);
 
+			if(error_state == null) {
+				//登録完了
+				forwardPath = "/WEB-INF/register-jsp/registerDone.jsp";
+			}else if(error_state == "error_duplicate") {
+				// 登録時二重送信エラー
+				forwardPath = "/WEB-INF/register-jsp/registerDoneDuplicate.jsp";
+			}else if(error_state == "error_sql") {
+				forwardPath = "/WEB-INF/register-jsp/registerDoneNe.jsp";
+			}
 
 		}
 
@@ -183,7 +186,7 @@ public class RegisterUser extends HttpServlet {
 		session.setAttribute("registerUser", registerUser);
 
 		//フォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registerConfirm.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/register-jsp/registerConfirm.jsp");
 		dispatcher.forward(request, response);
 	}
 }

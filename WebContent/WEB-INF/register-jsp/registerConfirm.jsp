@@ -9,19 +9,8 @@ User registerUser = (User) session.getAttribute("registerUser");
 <!DOCTYPE html>
 <html>
 <head>
-<script>
-function checkDoubleSubmit(){
-  var obj = document.getElementById("btnSubmit");
-  if(obj.disabled){
-    //ボタンがdisabledならsubmitしない
-    return false;
-  }else{
-    //ボタンがdisabledでなければ、ボタンをdisabledにした上でsubmitする
-    obj.disabled = true;
-    return true;
-  }
-}
-</script>
+<script type="text/javascript" src="js/submitButton.js"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザー登録</title>
 </head>
@@ -65,7 +54,7 @@ function checkDoubleSubmit(){
 	</table>
 
 	<br>
-	<input type="button" onclick="location.href='http://localhost:8080/emsys/RegisterUser?action=done';checkDoubleSubmit()"
+	<input type="button" id="btnSubmit" onclick="location.href='http://localhost:8080/emsys/RegisterUser?action=done';checkDoubleSubmit()"
 		value="登録">
 
 	<a href="/emsys/RegisterUser">戻る</a>

@@ -4,11 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>編集</title>
+<title>ユーザー登録</title>
 </head>
 <body>
-<p>編集完了しました。</p>
+<p><font size="5">【エラー！登録できませんでした。】</font></p>
+<p>エラーが起きました。お問い合わせください。</p>
 <br>
-<a href="/emsys/InquiryServlet">戻る</a>
+<a href="/emsys/RegisterUser">戻る</a>
 <a href="/emsys/top-jsp/top.jsp">TOP</a>
 </body>
+</html>

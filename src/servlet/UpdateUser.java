@@ -46,20 +46,20 @@ public class UpdateUser extends HttpServlet {
             //フォワード先を設定
             forwardPath = "/WEB-INF/update-jsp/updateForm.jsp";
         }
-        //登録確認画面から「登録実行」をリクエストされたときの処理
+        //「編集実行」をリクエストされたときの処理
         else if(action.equals("done")){
             //セッションスコープに保存された登録ユーザを
             HttpSession session = request.getSession();
             UserToUpdate updateUser = (UserToUpdate)session.getAttribute("updateUser");
 
-            //登録処理の呼び出し
+            //編集処理の呼び出し
             UpdateUserLogic logic = new UpdateUserLogic();
             logic.exute(updateUser);
 
             //不要となったセッションスコープ内のインスタンスを削除
             session.removeAttribute("userToUpdate");
 
-            //登録後のフォワード先を設定
+            //編集後のフォワード先を設定
             forwardPath = "/WEB-INF/update-jsp/updateDone.jsp";
 
         }
@@ -92,7 +92,7 @@ public class UpdateUser extends HttpServlet {
         String registered_date = request.getParameter("registered_date");
         String registered_person = request.getParameter("registered_person");
 
-        //登録するユーザの情報を設定
+        //編集するユーザの情報を設定
         UserToUpdate updateUser = new UserToUpdate(emp_no, emp_no_after, emp_name, emp_kana, hire_ymd, retirement_ymd, department_data, mail_add, update_date, update_person, registered_date, registered_person);
 
         //セッションスコープに登録ユーザを保存

@@ -7,7 +7,8 @@
 <title>ユーザー登録</title>
 </head>
 <body>
-<p>登録に失敗しました。</p>
+<p><font size="5">【エラー！登録できませんでした。】</font></p>
+<p>そのユーザーIDは既に登録されています。</p>
 <br>
 <a href="/emsys/RegisterUser">戻る</a>
 <a href="/emsys/top-jsp/top.jsp">TOP</a>

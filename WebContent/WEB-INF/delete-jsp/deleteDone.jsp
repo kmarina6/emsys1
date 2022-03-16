@@ -9,7 +9,7 @@
 <body>
 <p>削除しました。</p>
 <br>
-<a href="/emsys/Search?action=delete">戻る</a>
+<a href="/emsys/InquiryServlet">戻る</a>
 <a href="/emsys/top-jsp/top.jsp">TOP</a>
 </body>
 </html>

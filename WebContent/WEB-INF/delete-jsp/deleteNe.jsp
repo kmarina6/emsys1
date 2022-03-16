@@ -11,7 +11,7 @@
 <p>その社員番号は存在しません</p>
 
 
-<a href="/emsys/Search?action=delete">戻る</a>
+<a href="/emsys/InquiryServlet">戻る</a>
 <a href="/emsys/top-jsp/top.jsp">TOP</a>
 </body>
 </html>

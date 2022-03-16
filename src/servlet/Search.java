@@ -42,28 +42,7 @@ public class Search extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		//      // TODO Auto-generated method stub
-		//      response.getWriter().append("Served at: ").append(request.getContextPath());
 
-		//フォワード先
-		String forwardPath = null;
-
-		//サーブレットクラスの動作を決定する「action」の値を
-		//リクエストパラメータから取得
-		String action = request.getParameter("action");
-
-		//「登録の開始」をリクエストされたときの処理
-		if (action.equals("update")) {
-			//フォワード先を設定
-			forwardPath = "/WEB-INF/update-jsp/updateTop.jsp";
-		}
-		//登録確認画面から「登録実行」をリクエストされたときの処理
-		else if (action.equals("delete")) {
-			forwardPath = "/WEB-INF/delete-jsp/deleteTop.jsp";
-		}
-
-		// 設定されたフォワード先を設定
-		RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
-		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -99,6 +78,7 @@ public class Search extends HttpServlet {
 		//フォワード先
 		String forwardPath = null;
 
+		String deleteUpdateFlag = request.getParameter("deleteUpdateFlag");
 		try {
 
 			// JDBC ドライバを読み込み
@@ -110,7 +90,6 @@ public class Search extends HttpServlet {
 
 			// 編集前内容の表示の処理
 			String sql = "SELECT * FROM employee_data WHERE emp_no='" + emp_no + "'";
-			System.out.print("kiteruyo_sql" + sql + "   ");
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -211,7 +190,6 @@ public class Search extends HttpServlet {
 
 
 		ServletContext context = this.getServletContext();
-		//------------------------------------------------------------------------------------
 
 		//登録するユーザの情報を設定
 		SearchUser searchUser = new SearchUser(emp_no, emp_no_after, emp_name, emp_kana, hire_ymd, retirement_ymd,
@@ -230,9 +208,12 @@ public class Search extends HttpServlet {
 			if (delete_flag == false) {
 				forwardPath = "/WEB-INF/update-jsp/updateForm.jsp";
 			} else {
+				if(deleteUpdateFlag == null) {
 				forwardPath = "/WEB-INF/update-jsp/updateNe.jsp";
+				} else {
+					forwardPath = "/WEB-INF/update-jsp/updateForm.jsp";
+				}
 			}
-
 		} else if (action.equals("delete")) {
 			if (delete_flag == false) {
 				forwardPath = "/WEB-INF/delete-jsp/deleteConfirm.jsp";

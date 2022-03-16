@@ -34,7 +34,7 @@ SearchUser searchUser = (SearchUser) session.getAttribute("searchUser");
 <br>
 <input type="button" onclick="location.href='http://localhost:8080/emsys/DeleteUser?action=done'"
 		value="削除">
-<a href="/emsys/Search?action=delete">戻る</a>
+<a href="/emsys/InquiryServlet">戻る</a>
 
 </body>
 </html>

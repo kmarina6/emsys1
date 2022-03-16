@@ -94,13 +94,9 @@ public class InquiryServlet extends HttpServlet {
 					bean.setUpdatePerson(rs.getString("update_person"));
 					bean.setRegisteredDate(new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("registered_date")));
 					bean.setRegisteredPerson(rs.getString("registered_person"));
+					bean.setDeleteFlag(String.valueOf(rs.getBoolean("delete_flag")));
 
 					// データを保存した bean を beanList に追加
-					if(rs.getBoolean("delete_flag") == false){
-						bean.setDeleteFlag("");
-					}else {
-						bean.setDeleteFlag("×");
-					}
 					beanList.add(bean);
 					//System.out.print("kiteruyo  ");
 				}

@@ -15,11 +15,8 @@
 
 <input type="button" onclick="location.href='http://localhost:8080/emsys/RegisterUser'"value="登録">
 <br>
-<input type="button" onclick="location.href='http://localhost:8080/emsys/InquiryServlet'"value="照会">
+<input type="button" onclick="location.href='http://localhost:8080/emsys/InquiryServlet'"value="照会・編集・削除">
 <br>
-<input type="button" onclick="location.href='http://localhost:8080/emsys/Search?action=update'"value="編集">
-<br>
-<input type="button" onclick="location.href='http://localhost:8080/emsys/Search?action=delete'"value="削除">
 
 </div>
 </body>
